@@ -1,0 +1,157 @@
+{
+	"_version": "1.1.0",
+	"sap.app": {
+		"_version": "1.2.0",
+		"id": "com.sap.build.standard.wuFTimesheet",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"HCM_CICO_MANAGE_SRV": {
+				"uri": "/sap/opu/odata/sap/HCM_CICO_MANAGE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/HCM_CICO_MANAGE_SRV/metadata.xml"
+				}
+			},
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/Z_UI_TIME_TEAM_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/Z_UI_TIME_TEAM_SRV/metadata.xml"
+				}
+			}
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"ach": "ach",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.2.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": ["sap_belize"]
+	},
+	"sap.ui5": {
+		"_version": "1.1.0",
+		"rootView": {
+			"viewName": "generated.app.view.TimeEdit",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.32.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"": {
+				"dataSource": "mainService",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultBindingMode": "OneWay",
+					"defaultOperationMode": "Server",
+					"defaultCountMode": "Inline"
+				},
+				"preload": true
+			},
+			"TimeEntry": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneTime",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "HCM_CICO_MANAGE_SRV",
+				"preload": true
+			}
+		},
+		"resources": {
+			"css": []
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.sap.build.standard.wuFTimesheet.view",
+				"controlId": "App",
+				"clearTarget": false,
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": ["Team"]
+				}
+			},
+			"targets": {
+				"Team": {
+					"controlAggregation": "pages",
+					"viewName": "Team",
+					"viewId": "Team",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"Time": {
+					"controlAggregation": "pages",
+					"viewName": "Time",
+					"viewId": "Time",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"TimeEdit": {
+					"controlAggregation": "pages",
+					"viewName": "TimeEdit",
+					"viewId": "TimeEdit",
+					"viewLevel": 3,
+					"transition": "slide"
+				}
+			},
+			"routes": [{
+				"pattern": "Team/:context:",
+				"name": "Team",
+				"target": ["Team"]
+			}, {
+				"pattern": "",
+				"name": "default",
+				"target": ["Team"]
+			}, {
+				"pattern": "Time/:context:",
+				"name": "Time",
+				"target": ["Time"]
+			}, {
+				"pattern": "TimeEdit/:context:",
+				"name": "TimeEdit",
+				"target": ["TimeEdit"]
+			}]
+		}
+	}
+}

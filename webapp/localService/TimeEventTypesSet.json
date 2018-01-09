@@ -1,0 +1,13 @@
+[{
+	"TimeTypeText": "Kommen",
+	"ID": "P10"
+}, {
+	"TimeTypeText": "Beginn Pause",
+	"ID": "P15"
+}, {
+	"TimeTypeText": "Gehen",
+	"ID": "P20"
+}, {
+	"TimeTypeText": "Ende Pause",
+	"ID": "P25"
+}]

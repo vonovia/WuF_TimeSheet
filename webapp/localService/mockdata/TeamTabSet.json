@@ -1,0 +1,113 @@
+[{
+	"ID": "22004454",
+	"Fullname": "Mats Lehmann",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "",
+	"Planstelle": "Teamleiter",
+	"own_Team": "X"
+}, {
+	"ID": "22005563",
+	"Fullname": "Mario Klose",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gartenvorarbeiter",
+	"Planstelle": "Vorarbeiter",
+	"own_Team": "X"
+}, {
+	"ID": "22004878",
+	"Fullname": "Oliver Lehmann",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22005032",
+	"Fullname": "Lars Khedira",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22006126",
+	"Fullname": "Marcel Ratlos",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22007412",
+	"Fullname": "Johnny Schumacher",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22007411",
+	"Fullname": "Lars Reus",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22007811",
+	"Fullname": "Harald Goesebrecht",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22007918",
+	"Fullname": "Isabel Weidenfeller",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22004465",
+	"Fullname": "Patrick Meyer",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22008746",
+	"Fullname": "Ricky Schürrle",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22008971",
+	"Fullname": "Josephine Hummels",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22009725",
+	"Fullname": "Fabian Bierhoff",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "4000878",
+	"Fullname": "André Controletti",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gärtner",
+	"Planstelle": "Grünpfleger",
+	"own_Team": "X"
+}, {
+	"ID": "22008063",
+	"Fullname": "Roland Enke",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gartenhelfer",
+	"Planstelle": "Grünpfleger",
+	"own_Team": ""
+}, {
+	"ID": "22008861",
+	"Fullname": "Roland Hummels",
+	"ORG01": "Standort Berlin Süd",
+	"ORG02": "Gartenhelfer",
+	"Planstelle": "Grünpfleger",
+	"own_Team": ""
+}]

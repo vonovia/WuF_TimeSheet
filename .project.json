@@ -1,0 +1,39 @@
+{
+  "dataBinding": {
+    "/webapp/view/Team.view.xml": {
+      "entitySet": ""
+    },
+    "/webapp/view/Time.view.xml": {
+      "entitySet": "/TeamTabSet"
+    },
+    "/webapp/view/TimeEdit.view.xml": {
+      "entitySet": "/TimeEventsSet"
+    }
+  },
+  "generation": [
+    {
+      "templateId": "build_import_prototype",
+      "templateVersion": "1.0.0",
+      "dateTimeStamp": "Tue, 09 Jan 2018 13:50:47 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Tue, 09 Jan 2018 14:15:34 GMT"
+    }
+  ],
+  "translation": {
+    "translationDomain": "",
+    "supportedLanguages": "en,fr,de",
+    "defaultLanguage": "en",
+    "defaultI18NPropertyFile": "i18n.properties",
+    "resourceModelName": "i18n"
+  },
+  "mockpreview": {
+    "loadJSONFiles": true,
+    "mockUri": "/sap/opu/odata/sap/Z_UI_TIME_TEAM_SRV",
+    "metadataFilePath": "localService/metadata.xml",
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
+  }
+}
