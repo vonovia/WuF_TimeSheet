@@ -4,10 +4,10 @@
       "entitySet": ""
     },
     "/webapp/view/Time.view.xml": {
-      "entitySet": "/TeamTabSet"
+      "entitySet": "/TimeEventSet"
     },
     "/webapp/view/TimeEdit.view.xml": {
-      "entitySet": "/TimeEventsSet"
+      "entitySet": "/TimeEventSet"
     }
   },
   "generation": [

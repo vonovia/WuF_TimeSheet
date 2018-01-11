@@ -6,7 +6,7 @@ sap.ui.define([
 	"use strict";
 
 	var navigationWithContext = {
-		"TeamTabSet": {
+		"TeamSet": {
 			"Time": "",
 			"TimeEdit": "TimeEvents"
 		},

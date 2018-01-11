@@ -20,7 +20,8 @@
 															<Label text="Ereignistyp" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
 														</form:label>
 														<form:fields>
-															<ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" items="{path:'TimeEntry>/TimeEventTypeSet'}">
+															<ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+																items="{path:'TimeEntry>/TimeEventTypeSet'}">
 																<items>
 																	<core:Item text="{TimeEntry>TimeTypeText}" enabled="true" key="{TimeEntry>TimeTypeText}"/>
 																</items>
@@ -57,8 +58,9 @@
 							</layout:BlockLayoutCell>
 							<layout:BlockLayoutCell width="2" title="" titleAlignment="Begin" titleLevel="Auto">
 								<layout:content>
-									<List mode="Delete" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All" growing="true"
-										growingThreshold="20" growingScrollToLoad="true" itemPress="_onListItemPress" items="{TimeEntry>/TimeEventSet}">
+									<List id="TimeList" mode="Delete" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All" growing="true"
+										growingThreshold="20" growingScrollToLoad="true" itemPress="_onListItemPress"
+										 items="{path : 'TimeEntry>/TimeEventSet'}" >
 										<infoToolbar>
 											<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
 												<content>

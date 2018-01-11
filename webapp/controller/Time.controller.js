@@ -10,19 +10,25 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oParams = {};
 
-			if (oEvent.mParameters.data.context) {
-				this.sContext = oEvent.mParameters.data.context;
-				var oPath;
-				if (this.sContext) {
-					oPath = {
-						path: "TimeEventSet",
-						//parameters: {filter: {'Pernr': this.sContext} }
-						//path: "TimeEntry>/TimeEventSet" + this.sContext,
-						parameters: oParams
-					};
-					this.getView().bindObject(oPath);
-				}
+			//if (oEvent.mParameters.data.context) {
+			this.sContext = oEvent.mParameters.data.context;
+			var oPath;
+			//if (this.sContext) {
+			oPath = {
+				path: "TimeEntry>/TimeEventSet"
+					//parameters: {filter: {'Pernr': this.sContext} }
+					//path: "TimeEntry>/TimeEventSet" + this.sContext,
+					//parameters: oParams
+			};
+			this.getView().bindObject(oPath);
+			var oList = this.getView().byId("TimeList");
+			var oItems = oList.getBinding("items");
+			if (this.sContext) {
+				var oFilter = new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, this.sContext.substr(9, 8));
+				oItems.filter(oFilter);
 			}
+			//	}
+			//	}
 
 		},
 		_onPageNavButtonPress: function() {

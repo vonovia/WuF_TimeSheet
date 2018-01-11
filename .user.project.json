@@ -1,6 +1,34 @@
 {
   "run": [
     {
+      "filePath": "/webapp/Component.js",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [
+        {
+          "paramName": "",
+          "paramValue": ""
+        }
+      ],
+      "hashParameter": "",
+      "backendSystem": [
+        {
+          "source": "F60",
+          "destinations": "F60"
+        }
+      ],
+      "_metadata": {
+        "id": 7456943,
+        "runnerId": "fiorirunner",
+        "displayName": "Run Component.js",
+        "lastRunTimeStamp": 1515686654306
+      }
+    },
+    {
       "filePath": "/webapp/test/testFLPService.html",
       "previewMode": 1,
       "dataMode": 1,
@@ -12,28 +40,10 @@
       "hashParameter": "",
       "backendSystem": [],
       "_metadata": {
-        "runnerId": "webapprunner",
         "id": 3469897,
+        "runnerId": "webapprunner",
         "displayName": "Run testFLPService.html",
         "lastRunTimeStamp": 1515513468526
-      }
-    },
-    {
-      "filePath": "/webapp/Component.js",
-      "previewMode": 1,
-      "dataMode": 1,
-      "workspace": "withoutWorkspace",
-      "ui5ActiveVersion": null,
-      "ui5VerSource": null,
-      "isDefaultVersion": 0,
-      "urlParameters": [],
-      "hashParameter": "",
-      "backendSystem": [],
-      "_metadata": {
-        "id": 7456943,
-        "runnerId": "fiorirunner",
-        "displayName": "Run Component.js",
-        "lastRunTimeStamp": 1515513455173
       }
     }
   ]

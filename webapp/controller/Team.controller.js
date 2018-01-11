@@ -63,7 +63,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						masterContext: sMasterContext
 					}, false);
 				} else {
-					oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
+			
+			oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
 						if (bindingContext) {
 							sPath = bindingContext.getPath();
 							if (sPath.substring(0, 1) === "/") {
@@ -78,8 +79,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							this.oRouter.navTo(sRouteName);
 						} else {
 							this.oRouter.navTo(sRouteName, {
-								//context: oModel.getProperty("/Pernr"),
-								context: sPath,
+								context: oModel.getProperty("/Pernr"),
+								//context: sPath,
 								masterContext: sMasterContext
 							}, false);
 						}
