@@ -1,13 +1,13 @@
 {
   "dataBinding": {
     "/webapp/view/Team.view.xml": {
-      "entitySet": ""
-    },
-    "/webapp/view/Time.view.xml": {
-      "entitySet": "/TimeEventSet"
+      "entitySet": "/TeamSet"
     },
     "/webapp/view/TimeEdit.view.xml": {
       "entitySet": "/TimeEventSet"
+    },
+    "/webapp/view/Time.view.xml": {
+      "entitySet": ""
     }
   },
   "generation": [

@@ -9,7 +9,7 @@
 			"version": "1.0.0"
 		},
 		"dataSources": {
-			"HCM_CICO_MANAGE_SRV": {
+			"timeService": {
 				"uri": "/sap/opu/odata/sap/HCM_CICO_MANAGE_SRV/",
 				"type": "OData",
 				"settings": {
@@ -17,7 +17,7 @@
 					"localUri": "localService/HCM_CICO_MANAGE_SRV/metadata.xml"
 				}
 			},
-			"mainService": {
+			"teamService": {
 				"uri": "/sap/opu/odata/sap/Z_UI_TIME_TEAM_SRV/",
 				"type": "OData",
 				"settings": {
@@ -51,7 +51,9 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_belize"]
+		"supportedThemes": [
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"_version": "1.1.0",
@@ -62,8 +64,11 @@
 		"dependencies": {
 			"minUI5Version": "1.32.0",
 			"libs": {
-				"sap.ui.core": {},
+				"sap.fiori": {
+					"minVersion": ""
+				},
 				"sap.m": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {}
 			}
 		},
@@ -77,7 +82,7 @@
 				"uri": "i18n/i18n.properties"
 			},
 			"": {
-				"dataSource": "mainService",
+				"dataSource": "teamService",
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultBindingMode": "OneWay",
@@ -86,14 +91,14 @@
 				},
 				"preload": true
 			},
-			"TimeEntry": {
+			"Time": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneTime",
+					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "HCM_CICO_MANAGE_SRV",
+				"dataSource": "timeService",
 				"preload": true
 			}
 		},
@@ -109,7 +114,9 @@
 				"clearTarget": false,
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": ["Team"]
+					"target": [
+						"Team"
+					]
 				}
 			},
 			"targets": {
@@ -135,23 +142,36 @@
 					"transition": "slide"
 				}
 			},
-			"routes": [{
-				"pattern": "Team/:context:",
-				"name": "Team",
-				"target": ["Team"]
-			}, {
-				"pattern": "",
-				"name": "default",
-				"target": ["Team"]
-			}, {
-				"pattern": "Time/:context:",
-				"name": "Time",
-				"target": ["Time"]
-			}, {
-				"pattern": "TimeEdit/:context:",
-				"name": "TimeEdit",
-				"target": ["TimeEdit"]
-			}]
+			"routes": [
+				{
+					"pattern": "Team/:context:",
+					"name": "Team",
+					"target": [
+						"Team"
+					]
+				},
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"Team"
+					]
+				},
+				{
+					"pattern": "Time/:context:",
+					"name": "Time",
+					"target": [
+						"Time"
+					]
+				},
+				{
+					"pattern": "TimeEdit/:context:",
+					"name": "TimeEdit",
+					"target": [
+						"TimeEdit"
+					]
+				}
+			]
 		}
 	}
 }

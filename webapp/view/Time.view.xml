@@ -1,5 +1,5 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.wuFTimesheet.controller.Time" xmlns="sap.m"
-	xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	controllerName="com.sap.build.standard.wuFTimesheet.controller.Time">
 	<Page showHeader="true" title="" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress">
 		<content>
 			<layout:BlockLayout background="Default">
@@ -8,22 +8,30 @@
 						<layout:content>
 							<layout:BlockLayoutCell width="2" title="" titleAlignment="Begin" titleLevel="Auto">
 								<layout:content>
-									<form:Form width="100%" editable="true" visible="true">
+									<form:Form width="100%" editable="true" visible="true" id="TimeEntryForm">
 										<form:title>
 											<core:Title text="Neues Zeitereignis" level="Auto"/>
 										</form:title>
 										<form:formContainers>
-											<form:FormContainer visible="true">
+											<form:FormContainer visible="true" id="FormContainer">
 												<form:formElements>
+													<form:FormElement visible="true">
+														<form:label>
+															<Label text="Datum" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
+														</form:label>
+														<form:fields>
+															<DatePicker width="100%" id="EventDate" />
+														</form:fields>
+													</form:FormElement>
 													<form:FormElement visible="true">
 														<form:label>
 															<Label text="Ereignistyp" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
 														</form:label>
 														<form:fields>
-															<ComboBox editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
-																items="{path:'TimeEntry>/TimeEventTypeSet'}">
+															<ComboBox id="CmbEvenType" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+																items="{path:'Time>/TimeEventTypeSet'}">
 																<items>
-																	<core:Item text="{TimeEntry>TimeTypeText}" enabled="true" key="{TimeEntry>TimeTypeText}"/>
+																	<core:Item text="{Time>TimeTypeText}" enabled="true" key="{Time>TimeType}"/>
 																</items>
 															</ComboBox>
 														</form:fields>
@@ -33,15 +41,7 @@
 															<Label text="Zeit" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
 														</form:label>
 														<form:fields>
-															<Input type="Time" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" maxLength="0"/>
-														</form:fields>
-													</form:FormElement>
-													<form:FormElement visible="true">
-														<form:label>
-															<Label text="Datum" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
-														</form:label>
-														<form:fields>
-															<Input type="Date" showValueHelp="true" enabled="true" visible="true" width="auto" valueHelpOnly="false" maxLength="0"/>
+															<TimePicker id="EventTime" showValueHelp="true" enabled="true" visible="true" width="auto" maxLength="0" displayFormat="HH:mm"/>
 														</form:fields>
 													</form:FormElement>
 												</form:formElements>
@@ -53,14 +53,13 @@
 										</form:layout>
 									</form:Form>
 									<Button text="Anlegen" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
-										press="_onButtonPress3"/>
+										press="_onBtnCreateTime"/>
 								</layout:content>
 							</layout:BlockLayoutCell>
 							<layout:BlockLayoutCell width="2" title="" titleAlignment="Begin" titleLevel="Auto">
 								<layout:content>
-									<List id="TimeList" mode="Delete" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All" growing="true"
-										growingThreshold="20" growingScrollToLoad="true" itemPress="_onListItemPress"
-										 items="{path : 'TimeEntry>/TimeEventSet'}" >
+									<List id="TimeList" mode="Delete" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All"
+										growing="true" growingThreshold="20" growingScrollToLoad="true" itemPress="_onListItemPress" items="{path : 'Time>/TimeEventSet'}">
 										<infoToolbar>
 											<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
 												<content>
@@ -76,9 +75,9 @@
 											</Toolbar>
 										</headerToolbar>
 										<items>
-											<ObjectListItem intro="" title="{TimeEntry>TimeTypeText}"
-												number="{path: 'TimeEntry>EventTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { UTC: true, pattern: 'HH:mm' }}"
-												numberUnit="{TimeEntry>StatusText}" numberState="None" type="Active" selected="true" showMarkers="false" press="_onObjectListItemPress">
+											<ObjectListItem intro="" title="{Time>TimeTypeText}"
+												number="{path: 'Time>EventTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { UTC: true, pattern: 'HH:mm' }}" numberUnit="{Time>StatusText}"
+												numberState="None" type="Active" selected="true" showMarkers="false" press="_onObjectListItemPress">
 												<attributes/>
 												<firstStatus>
 													<ObjectStatus text="" state="None"/>

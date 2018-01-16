@@ -1,6 +1,24 @@
 {
   "run": [
     {
+      "filePath": "/webapp/test/testFLPService.html",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [],
+      "hashParameter": "",
+      "backendSystem": [],
+      "_metadata": {
+        "id": 3469897,
+        "runnerId": "webapprunner",
+        "displayName": "Run testFLPService.html",
+        "lastRunTimeStamp": 1516105368682
+      }
+    },
+    {
       "filePath": "/webapp/Component.js",
       "previewMode": 1,
       "dataMode": 1,
@@ -25,25 +43,7 @@
         "id": 7456943,
         "runnerId": "fiorirunner",
         "displayName": "Run Component.js",
-        "lastRunTimeStamp": 1515686654306
-      }
-    },
-    {
-      "filePath": "/webapp/test/testFLPService.html",
-      "previewMode": 1,
-      "dataMode": 1,
-      "workspace": "withoutWorkspace",
-      "ui5ActiveVersion": null,
-      "ui5VerSource": null,
-      "isDefaultVersion": 0,
-      "urlParameters": [],
-      "hashParameter": "",
-      "backendSystem": [],
-      "_metadata": {
-        "id": 3469897,
-        "runnerId": "webapprunner",
-        "displayName": "Run testFLPService.html",
-        "lastRunTimeStamp": 1515513468526
+        "lastRunTimeStamp": 1516096510200
       }
     }
   ]
