@@ -2,7 +2,7 @@
 	"_version": "1.1.0",
 	"sap.app": {
 		"_version": "1.2.0",
-		"id": "com.sap.build.standard.wuFTimesheet",
+		"id": "de.vonovia.wuFTimesheet",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
@@ -14,7 +14,8 @@
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
-					"localUri": "localService/HCM_CICO_MANAGE_SRV/metadata.xml"
+					"localUri": "localService/HCM_CICO_MANAGE_SRV/metadata.xml",
+					"annotations": []
 				}
 			},
 			"teamService": {
@@ -51,9 +52,7 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_belize"]
 	},
 	"sap.ui5": {
 		"_version": "1.1.0",
@@ -94,9 +93,11 @@
 			"Time": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
-					"defaultOperationMode": "Server",
+					"useBatch": "false",
 					"defaultBindingMode": "TwoWay",
-					"defaultCountMode": "Request"
+					"defaultOperationMode": "Default",
+					"defaultCountMode": "None"
+					
 				},
 				"dataSource": "timeService",
 				"preload": true
@@ -114,9 +115,7 @@
 				"clearTarget": false,
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": [
-						"Team"
-					]
+					"target": ["Team"]
 				}
 			},
 			"targets": {
@@ -142,36 +141,23 @@
 					"transition": "slide"
 				}
 			},
-			"routes": [
-				{
-					"pattern": "Team/:context:",
-					"name": "Team",
-					"target": [
-						"Team"
-					]
-				},
-				{
-					"pattern": "",
-					"name": "default",
-					"target": [
-						"Team"
-					]
-				},
-				{
-					"pattern": "Time/:context:",
-					"name": "Time",
-					"target": [
-						"Time"
-					]
-				},
-				{
-					"pattern": "TimeEdit/:context:",
-					"name": "TimeEdit",
-					"target": [
-						"TimeEdit"
-					]
-				}
-			]
+			"routes": [{
+				"pattern": "Team/:context:",
+				"name": "Team",
+				"target": ["Team"]
+			}, {
+				"pattern": "",
+				"name": "default",
+				"target": ["Team"]
+			}, {
+				"pattern": "Time/:context:",
+				"name": "Time",
+				"target": ["Time"]
+			}, {
+				"pattern": "TimeEdit/:context:",
+				"name": "TimeEdit",
+				"target": ["TimeEdit"]
+			}]
 		}
 	}
 }

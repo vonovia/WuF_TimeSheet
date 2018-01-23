@@ -1,7 +1,12 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
 	controllerName="com.sap.build.standard.wuFTimesheet.controller.Time">
-	<Page showHeader="true" title="" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress">
+	<Page showHeader="false" title="" showFooter="true" showNavButton="false" navButtonPress="_onPageNavButtonPress">
 		<content>
+			<FlexBox width="100%" id="__box0" justifyContent="Center">
+				<items>
+					<DatePicker width="100%" id="EventDate" valueFormat="YYYY-MM-dd" change="_onChangeDate"/>
+				</items>
+			</FlexBox>
 			<layout:BlockLayout background="Default">
 				<layout:content>
 					<layout:BlockLayoutRow scrollable="false">
@@ -15,14 +20,6 @@
 										<form:formContainers>
 											<form:FormContainer visible="true" id="FormContainer">
 												<form:formElements>
-													<form:FormElement visible="true">
-														<form:label>
-															<Label text="Datum" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
-														</form:label>
-														<form:fields>
-															<DatePicker width="100%" id="EventDate" />
-														</form:fields>
-													</form:FormElement>
 													<form:FormElement visible="true">
 														<form:label>
 															<Label text="Ereignistyp" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
@@ -58,8 +55,9 @@
 							</layout:BlockLayoutCell>
 							<layout:BlockLayoutCell width="2" title="" titleAlignment="Begin" titleLevel="Auto">
 								<layout:content>
-									<List id="TimeList" mode="Delete" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All"
-										growing="true" growingThreshold="20" growingScrollToLoad="true" itemPress="_onListItemPress" items="{path : 'Time>/TimeEventSet'}">
+									<List id="TimeList" mode="Delete" delete="handleDelete" width="100%" headerText="Header" footerText="" backgroundDesign="Solid"
+										showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" itemPress="_onListItemPress"
+										items="{path : 'Time>/TimeEventSet'}">
 										<infoToolbar>
 											<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
 												<content>
@@ -76,13 +74,21 @@
 										</headerToolbar>
 										<items>
 											<ObjectListItem intro="" title="{Time>TimeTypeText}"
-												number="{path: 'Time>EventTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { UTC: true, pattern: 'HH:mm' }}" numberUnit="{Time>StatusText}"
-												numberState="None" type="Active" selected="true" showMarkers="false" press="_onObjectListItemPress">
+												number="{path: 'Time>EventTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { UTC: true, pattern: 'HH:mm' }}"
+												numberUnit="{Time>StatusText}" numberState="None" type="Active" selected="true" showMarkers="false" press="">
 												<attributes/>
 												<firstStatus>
 													<ObjectStatus text="" state="None"/>
 												</firstStatus>
-												<secondStatus/>
+												<customData>
+													<core:CustomData key="id" value="{Time>ReqId}"/>
+													<core:CustomData key="key" value="{Time>TimeType}"/>
+													<core:CustomData key="date" value="{Time>EventDate}"/>
+													<core:CustomData key="time" value="{Time>EventTime}"/>
+													<core:CustomData key="pernr" value="{Time>Pernr}"/>
+													<core:CustomData key="timezone" value="{Time>TimezoneOffset}"/>
+													<core:CustomData key="timetypetext" value="{Time>TimeTypeText}"/>
+												</customData>
 											</ObjectListItem>
 										</items>
 									</List>

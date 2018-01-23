@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/sap/build/standard/wuFTimesheet/model/models"
-], function(UIComponent, Device, models) {
+	"com/sap/build/standard/wuFTimesheet/model/models",
+	"sap/ui/core/routing/HashChanger"
+], function(UIComponent, Device, models, HashChanger) {
 	"use strict";
 
 	var navigationWithContext = {
@@ -10,7 +11,7 @@ sap.ui.define([
 			"Time": "",
 			"TimeEdit": "TimeEvents"
 		},
-		"TimeEventsSet": {
+		"TimeEventSet": {
 			"TimeEdit": ""
 		},
 		"TimeEventTypesSet": {
@@ -43,6 +44,16 @@ sap.ui.define([
 			// set application model
 			var oApplicationModel = new sap.ui.model.json.JSONModel({});
 			this.setModel(oApplicationModel, "applicationModel");
+
+			// set exchangeModel Model
+			var oExchangeModel = new sap.ui.model.json.JSONModel({});
+			this.setModel(oExchangeModel, "exchangeModel");
+
+			var oExchangeModelTeam = new sap.ui.model.json.JSONModel({});
+			this.setModel(oExchangeModelTeam, "exchangeModelTeam");
+
+			// reset the routing hash
+			HashChanger.getInstance().replaceHash("");
 
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);

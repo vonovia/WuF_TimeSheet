@@ -63,8 +63,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						masterContext: sMasterContext
 					}, false);
 				} else {
-			
-			oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
+
+					oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
 						if (bindingContext) {
 							sPath = bindingContext.getPath();
 							if (sPath.substring(0, 1) === "/") {
@@ -97,7 +97,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		_onTableItemPress: function(oEvent) {
 
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
-
+			var oSelected = oEvent.getParameter("listItem");
+			var aTeam = [oSelected];
+			var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam");
+			oTeam.setData(aTeam);
 			return new Promise(function(fnResolve) {
 				this.doNavigate("Time", oBindingContext, fnResolve, "");
 			}.bind(this)).catch(function(err) {
@@ -107,7 +110,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			});
 
 		},
-		_onRowPress: function(oEvent) {
+		/*_onRowPress: function(oEvent) {
 
 			var oBindingContext = oEvent.getSource().getBindingContext();
 
@@ -120,11 +123,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 			});
 
-		},
-		_onButtonPress2: function(oEvent) {
+		},*/
+		_onTeamChoice: function(oEvent) {
 
-			var oBindingContext = oEvent.getSource().getBindingContext();
+			var oSelectedItems = this.getView().byId("tblTeam").getSelectedItems();
+			var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam");
+			//var oData = oEvent.getParameter("listItem").data();
+			oTeam.setData(oSelectedItems);
 
+			var oBindingContext = oSelectedItems[0].getBindingContext();
 			return new Promise(function(fnResolve) {
 
 				this.doNavigate("Time", oBindingContext, fnResolve, "");

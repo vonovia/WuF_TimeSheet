@@ -24,25 +24,30 @@ sap.ui.define([
 				var oList = this.getView().byId("TimeList");
 				var oItems = oList.getBinding("items");
 
-				var today = new Date();
-				today = this.formatDateString(today);
-
+				var oDatePicker = this.getView().byId("EventDate");
+				var dateold = oDatePicker.getValue();
+				var date = new Date();
+				if (dateold === "") {
+					date = this.formatDateString(date);
+					oDatePicker.setValue(date);
+				} else {
+					date = this.formatDateString(dateold);
+				}
 				if (this.sContext) {
-					var sPernr = this.sContext.substr(9, 8);
+					this.sPernr = this.sContext.substr(9, 8);
 					//var oFilter = new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, sPernr);
 					var oFilter = new sap.ui.model.Filter({
 						filters: [
-							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, sPernr),
-							new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, today)
+							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, this.sPernr),
+							new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, date)
 						],
 						and: true
 					});
 					oItems.filter(oFilter);
-				}
-				//
 
-				//	}
-				//	}
+					var s = new sap.ui.model.Sorter("EventTime", true, false);
+					oItems.sort(s);
+				} 
 			},
 			_onPageNavButtonPress: function() {
 				var oHistory = History.getInstance();
@@ -65,7 +70,22 @@ sap.ui.define([
 				return oQuery;
 			},
 			_onListItemPress: function(oEvent) {
-				var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
+
+				var m = this.getOwnerComponent().getModel("exchangeModel");
+				//var a = this.byId("CmbEvenType").getModel();
+				//this.getOwnerComponent().setModel(a, "eventTypesModel");
+				var oData = oEvent.getParameter("listItem").data();
+				var oProperties = {
+					ReqId: oData.id,
+					Pernr: oData.pernr,
+					TimeType: oData.key,
+					EventDate: oData.date,
+					EventTime: oData.time,
+					TimezoneOffset: oData.timezone
+				};
+				m.setData(oProperties);
+
+				var oBindingContext = oEvent.getParameter("listItem").getBindingContext("Time");
 				return new Promise(function(fnResolve) {
 					this.doNavigate("TimeEdit", oBindingContext, fnResolve, "");
 				}.bind(this)).catch(function(err) {
@@ -75,6 +95,7 @@ sap.ui.define([
 				});
 			},
 			doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
+
 				var sPath = oBindingContext ? oBindingContext.getPath() : null;
 				var oModel = oBindingContext ? oBindingContext.getModel() : null;
 				var sEntityNameSet;
@@ -92,9 +113,10 @@ sap.ui.define([
 				}
 				if (sNavigationPropertyName !== null && sNavigationPropertyName !== undefined) {
 					if (sNavigationPropertyName === "") {
+						sPath = "Time>" + sPath;
 						this.oRouter.navTo(sRouteName, {
-							context: sPath,
-							masterContext: sMasterContext
+							context: sPath
+								//masterContext: sMasterContext
 						}, false);
 					} else {
 						oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
@@ -124,16 +146,36 @@ sap.ui.define([
 					fnPromiseResolve();
 				}
 			},
-			_onObjectListItemPress: function(oEvent) {
-				var oBindingContext = oEvent.getSource().getBindingContext();
-				return new Promise(function(fnResolve) {
-					this.doNavigate("TimeEdit", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function(err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
+			/*	_onObjectListItemPress: function(oEvent) {
+
+					var m = this.getOwnerComponent().getModel("exchangeModel");
+					var a = this.byId("CmbEvenType").getModel();
+					this.getOwnerComponent().setModel(a, "eventTypesModel");
+					var s = oEvent.getParameter("listItem").data().id;
+					var b;
+					var c = this.timeEvents;
+					for (var i = 0; i < c.length; i++) {
+						if (c[i].ReqId === s) {
+							b = c[i];
+							break;
+						}
 					}
-				});
-			},
+					m.setData(b);
+					clearInterval(this._timeCalculator);
+					this._nCounter = 0;
+					this.popover = null;
+					this.oRouter.navTo("TimeEdit", {}, true);
+
+					/*				var oBindingContext = oEvent.getSource().getBindingContext("Time");
+									return new Promise(function(fnResolve) {
+										this.doNavigate("TimeEdit", oBindingContext, fnResolve, "");
+									}.bind(this)).catch(function(err) {
+										if (err !== undefined) {
+											MessageBox.error(err.message);
+										}
+									});*/
+			//},
+
 			onInit: function() {
 				this.mBindingOptions = {};
 				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -141,7 +183,9 @@ sap.ui.define([
 				this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "YYYYMMdd"
 				});
-
+				if (!this.getOwnerComponent().getModel("exchangeModelTeam").getData().length) {
+					this.oRouter.navTo("Team", true);
+				}
 			},
 			/**
 			 *@memberOf com.sap.build.standard.wuFTimesheet.controller.Time
@@ -154,31 +198,72 @@ sap.ui.define([
 				//var d = this.formatDateTimeString(oProperties.EventDate);
 				//var d = new Date(oProperties.EventDate);
 				//oProperties.EventDate = this.oFormatYyyymmdd.format(d);
-
 				//oProperties.EventDate = this.formatDateTimeString(oProperties.EventDate);
-
 				var oProperties = {
-					Pernr: "22004454",
+					Pernr: this.Pernr,
 					TimeType: this.getView().byId("CmbEvenType").getSelectedKey(),
 					EventDate: this.formatDateTimeString(this.getView().byId("EventDate").getDateValue()),
 					EventTime: this.formatTimeString(this.getView().byId("EventTime").getDateValue())
 				};
-
 				var oModel = this.getOwnerComponent().getModel("Time");
-
-				oModel.create("/TimeEventSet", oProperties);
+				var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam").getData();
+				var fLen = oTeam.length;
+				for (var i = 0; i < fLen; i++) {
+					oProperties.Pernr = oTeam[i].data().pernr;
+					oModel.create("/TimeEventSet", oProperties, {groupId: oProperties.Pernr });
+					oModel.submitChanges({
+						success: function(oData, response) {
+							MessageBox.success("Erfolgreich");
+						}
+					});
+				}
 				//oModel.setProperty(sPath + "/EventDate", this.formatDateTimeString(oProperties.EventDate));
 				//oModel.setProperty(sPath + "/Pernr", "22004454");
-
-				oModel.submitChanges({
-					success: function(oData, response) {
-						MessageBox.success("Erfolgreich");
-					}
-				});
 				//oContext.getModel().refresh();
 				//oModel.updateBindings("true");
 				//oModel.resetChanges();
+			},
+			handleDelete: function(oEvent) {
 
+				var oBindingContext = oEvent.getParameter("listItem").getBindingContext("Time");
+				var sPath = oBindingContext ? oBindingContext.getPath() : null;
+
+				var s = oEvent.getParameter("listItem");
+				var oData = s.data();
+				var a = [{
+					label: "Datum",
+					text: this.formatDateString(oData.date)
+				}, {
+					label: "Ereignistyp",
+					text: oData.timetypetext
+				}, {
+					label: "Zeit",
+					text: this.formatTime(oData.time.ms)
+				}];
+				var S = {
+					showNote: false,
+					title: "Zeitereignis löschen",
+					confirmButtonLabel: "OK",
+					additionalInformation: a
+				};
+				this.openConfirmationPopup(S, false, s, sPath);
+			},
+			deleteEntry: function(s, sPath) {
+				var oData = s.data();
+
+				var oProperties = {
+					ReqId: oData.id,
+					Pernr: oData.pernr,
+					TimeType: oData.key,
+					EventDate: oData.date,
+					EventTime: oData.time,
+					TimezoneOffset: oData.timezone
+				};
+
+				var oModel = this.getOwnerComponent().getModel("Time");
+				//oModel.create("/TimeEventSet", oProperties);
+
+				oModel.remove(sPath, oProperties);
 			},
 			formatDateTimeString: function(d) {
 				if (typeof d === "string") {
@@ -210,8 +295,86 @@ sap.ui.define([
 					m = "0" + m;
 				}
 				return "PT" + h + "H" + m + "M00S";
-			}
+			},
+			formatTime: function(t) {
+				var T = sap.ui.core.format.DateFormat.getTimeInstance({
+					pattern: "HH:mm",
+					UTC: true
+				});
+				var d = new Date(t);
+				var a = T.format(d);
+				return a;
+			},
+			/**
+			 *@memberOf com.sap.build.standard.wuFTimesheet.controller.Time
+			 */
+			_onChangeDate: function() {
 
+				var oList = this.getView().byId("TimeList");
+				var oItems = oList.getBinding("items");
+
+				var date = this.formatDateString(this.getView().byId("EventDate").getDateValue());
+
+				var oFilter = new sap.ui.model.Filter({
+					filters: [
+						new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, this.sPernr),
+						new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, date)
+					],
+					and: true
+				});
+				oItems.filter(oFilter);
+			},
+			openConfirmationPopup: function(s, a, b, sPath) {
+				var c = this;
+				var e = [];
+				for (var i = 0; i < s.additionalInformation.length; i++) {
+					e.push(new sap.m.Label({
+						text: s.additionalInformation[i].label,
+						design: "Bold"
+					}));
+					e.push(new sap.m.Text({
+						text: s.additionalInformation[i].text
+					}));
+				}
+				var f = new sap.ui.layout.form.SimpleForm({
+					minWidth: 1024,
+					editable: false,
+					maxContainerCols: 2,
+					layout: "ResponsiveGridLayout",
+					labelSpanL: 5,
+					labelSpanM: 5,
+					labelSpanS: 5,
+					emptySpanL: 2,
+					emptySpanM: 2,
+					emptySpanS: 2,
+					columnsL: 1,
+					columnsM: 1,
+					columnsS: 1,
+					content: e
+				});
+				var C = new sap.m.Dialog({
+					title: s.title,
+					content: [f],
+					beginButton: new sap.m.Button({
+						text: s.confirmButtonLabel,
+						press: function() {
+							if (a) {
+								C.close();
+							} else {
+								c.deleteEntry(b, sPath);
+							}
+							C.close();
+						}
+					}),
+					endButton: new sap.m.Button({
+						text: "Abbrechen",
+						press: function() {
+							C.close();
+						}
+					})
+				}).addStyleClass("sapUiContentPadding sapUiMediumMarginTopBottom");
+				C.open();
+			}
 		});
 	}, /* bExport= */
 	true);
