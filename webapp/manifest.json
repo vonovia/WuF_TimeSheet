@@ -52,7 +52,9 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_belize"]
+		"supportedThemes": [
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"_version": "1.1.0",
@@ -97,7 +99,6 @@
 					"defaultBindingMode": "TwoWay",
 					"defaultOperationMode": "Default",
 					"defaultCountMode": "None"
-					
 				},
 				"dataSource": "timeService",
 				"preload": true
@@ -115,7 +116,9 @@
 				"clearTarget": false,
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": ["Team"]
+					"target": [
+						"Team"
+					]
 				}
 			},
 			"targets": {
@@ -141,23 +144,40 @@
 					"transition": "slide"
 				}
 			},
-			"routes": [{
-				"pattern": "Team/:context:",
-				"name": "Team",
-				"target": ["Team"]
-			}, {
-				"pattern": "",
-				"name": "default",
-				"target": ["Team"]
-			}, {
-				"pattern": "Time/:context:",
-				"name": "Time",
-				"target": ["Time"]
-			}, {
-				"pattern": "TimeEdit/:context:",
-				"name": "TimeEdit",
-				"target": ["TimeEdit"]
-			}]
+			"routes": [
+				{
+					"pattern": "Team/:context:",
+					"name": "Team",
+					"target": [
+						"Team"
+					]
+				},
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"Team"
+					]
+				},
+				{
+					"pattern": "Time/:context:",
+					"name": "Time",
+					"target": [
+						"Time"
+					]
+				},
+				{
+					"pattern": "TimeEdit/:context:",
+					"name": "TimeEdit",
+					"target": [
+						"TimeEdit"
+					]
+				}
+			]
 		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zui_time_wuf/webapp",
+		"_version": "1.1.0"
 	}
 }

@@ -8,7 +8,7 @@
         "name": "sapui5",
         "preferLocal": true,
         "entryPath": "/resources",
-        "version": "1.44.19"
+        "version": "1.44.18"
       },
       "description": "SAPUI5 Resources"
     },
@@ -18,7 +18,7 @@
         "type": "service",
         "name": "sapui5",
         "entryPath": "/test-resources",
-        "version": "1.44.19"
+        "version": "1.44.18"
       },
       "description": "SAPUI5 Test Resources"
     },

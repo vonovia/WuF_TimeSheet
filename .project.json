@@ -29,5 +29,15 @@
     "metadataFilePath": "localService/metadata.xml",
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
+  },
+  "basevalidator": {
+    "services": {
+      "js": "fioriJsValidator",
+      "xml": "fioriXmlAnalysis"
+    }
+  },
+  "deploy": {
+    "destination": "F60",
+    "name": "ZUI_TIME_WUF"
   }
 }

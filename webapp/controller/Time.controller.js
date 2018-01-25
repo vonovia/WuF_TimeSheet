@@ -36,6 +36,7 @@ sap.ui.define([
 				if (this.sContext) {
 					this.sPernr = this.sContext.substr(9, 8);
 					//var oFilter = new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, sPernr);
+					/** @type sap.ui.model.Filter */
 					var oFilter = new sap.ui.model.Filter({
 						filters: [
 							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, this.sPernr),
@@ -44,7 +45,7 @@ sap.ui.define([
 						and: true
 					});
 					oItems.filter(oFilter);
-
+					
 					var s = new sap.ui.model.Sorter("EventTime", true, false);
 					oItems.sort(s);
 				} 
@@ -74,6 +75,7 @@ sap.ui.define([
 				var m = this.getOwnerComponent().getModel("exchangeModel");
 				//var a = this.byId("CmbEvenType").getModel();
 				//this.getOwnerComponent().setModel(a, "eventTypesModel");
+				/* @type sap.ui.core.CustomData */
 				var oData = oEvent.getParameter("listItem").data();
 				var oProperties = {
 					ReqId: oData.id,
@@ -183,9 +185,9 @@ sap.ui.define([
 				this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "YYYYMMdd"
 				});
-				if (!this.getOwnerComponent().getModel("exchangeModelTeam").getData().length) {
+				/*if (!this.getOwnerComponent().getModel("exchangeModelTeam").getData().length) {
 					this.oRouter.navTo("Team", true);
-				}
+				}*/
 			},
 			/**
 			 *@memberOf com.sap.build.standard.wuFTimesheet.controller.Time
