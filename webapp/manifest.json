@@ -129,6 +129,13 @@
 					"viewLevel": 1,
 					"transition": "slide"
 				},
+				"Overview": {
+					"controlAggregation": "pages",
+					"viewName": "Overview",
+					"viewId": "Overview",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
 				"Time": {
 					"controlAggregation": "pages",
 					"viewName": "Time",
@@ -144,36 +151,37 @@
 					"transition": "slide"
 				}
 			},
-			"routes": [
-				{
-					"pattern": "Team/:context:",
-					"name": "Team",
-					"target": [
-						"Team"
-					]
-				},
-				{
-					"pattern": "",
-					"name": "default",
-					"target": [
-						"Team"
-					]
-				},
-				{
-					"pattern": "Time/:context:",
-					"name": "Time",
-					"target": [
-						"Time"
-					]
-				},
-				{
-					"pattern": "TimeEdit/:context:",
-					"name": "TimeEdit",
-					"target": [
-						"TimeEdit"
-					]
-				}
-			]
+			"routes": [{
+				"pattern": "Team/:context:",
+				"name": "Team",
+				"target": [
+					"Team"
+				]
+			}, {
+				"pattern": "",
+				"name": "default",
+				"target": [
+					"Team"
+				]
+			}, {
+				"pattern": "Time/:context:",
+				"name": "Time",
+				"target": [
+					"Time"
+				]
+			}, {
+				"pattern": "TimeEdit/:context:",
+				"name": "TimeEdit",
+				"target": [
+					"TimeEdit"
+				]
+			}, {
+				"pattern": "Overview/:context:",
+				"name": "Overview",
+				"target": [
+					"Overview"
+				]
+			}]
 		}
 	},
 	"sap.platform.abap": {

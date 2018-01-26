@@ -23,7 +23,7 @@
 											<Label text="Ereignistyp" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
 										</form:label>
 										<form:fields>
-											<ComboBox id="CmbEvenType" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"  items="{path:'Time>/TimeEventTypeSet'}">
+											<ComboBox id="CmbEvenType" editable="false" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"  items="{path:'Time>/TimeEventTypeSet'}">
 												<items>
 													<core:Item text="{Time>TimeTypeText}" enabled="true" key="{Time>TimeType}"/>
 												</items>

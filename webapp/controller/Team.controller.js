@@ -142,6 +142,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			});
 
 		},
+		_onTeamOverview: function(oEvent) {
+			var oSelectedItems = this.getView().byId("tblTeam").getSelectedItems();
+			var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam");
+			oTeam.setData(oSelectedItems);
+
+			//this.oRouter.navTo("Overview");
+
+			var oBindingContext = oSelectedItems[0].getBindingContext();
+			return new Promise(function(fnResolve) {
+
+				this.doNavigate("Overview", oBindingContext, fnResolve, "");
+			}.bind(this)).catch(function(err) {
+				if (err !== undefined) {
+					MessageBox.error(err.message);
+				}
+			});
+		},
 		onInit: function() {
 
 			this.mBindingOptions = {};

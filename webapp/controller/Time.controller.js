@@ -45,10 +45,10 @@ sap.ui.define([
 						and: true
 					});
 					oItems.filter(oFilter);
-					
+
 					var s = new sap.ui.model.Sorter("EventTime", true, false);
 					oItems.sort(s);
-				} 
+				}
 			},
 			_onPageNavButtonPress: function() {
 				var oHistory = History.getInstance();
@@ -211,14 +211,22 @@ sap.ui.define([
 				var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam").getData();
 				var fLen = oTeam.length;
 				for (var i = 0; i < fLen; i++) {
-					oProperties.Pernr = oTeam[i].data().pernr;
-					oModel.create("/TimeEventSet", oProperties, {groupId: oProperties.Pernr });
-					oModel.submitChanges({
-						success: function(oData, response) {
-							MessageBox.success("Erfolgreich");
-						}
+					//oProperties.Pernr = oTeam[i].data().pernr;
+					oModel.create("/TimeEventSet", {
+						Pernr: oTeam[i].data().pernr,
+						TimeType: this.getView().byId("CmbEvenType").getSelectedKey(),
+						EventDate: this.formatDateTimeString(this.getView().byId("EventDate").getDateValue()),
+						EventTime: this.formatTimeString(this.getView().byId("EventTime").getDateValue())
+					}, {
+						groupId: oTeam[i].data().pernr
 					});
+
 				}
+				oModel.submitChanges({
+					success: function(oData, response) {
+						MessageBox.success("Erfolgreich");
+					}
+				});
 				//oModel.setProperty(sPath + "/EventDate", this.formatDateTimeString(oProperties.EventDate));
 				//oModel.setProperty(sPath + "/Pernr", "22004454");
 				//oContext.getModel().refresh();

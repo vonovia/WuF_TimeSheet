@@ -51,6 +51,9 @@ sap.ui.define([
 
 			var oExchangeModelTeam = new sap.ui.model.json.JSONModel({});
 			this.setModel(oExchangeModelTeam, "exchangeModelTeam");
+			
+			var oOverview = new sap.ui.model.json.JSONModel({});
+			this.setModel(oOverview, "Overview");
 
 			// reset the routing hash
 			HashChanger.getInstance().replaceHash("");
