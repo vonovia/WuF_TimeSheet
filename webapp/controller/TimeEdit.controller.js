@@ -10,8 +10,8 @@ sap.ui.define([
 		return BaseController.extend("com.sap.build.standard.wuFTimesheet.controller.TimeEdit", {
 			handleRouteMatched: function(oEvent) {
 				var oParams = {};
-				if (oEvent.mParameters.data.context) {
-					this.sContext = oEvent.mParameters.data.context;
+				if (oEvent.getParameter("data").context) {
+					this.sContext = oEvent.getParameter("data").context;
 					var sPath = this.sContext.split(">")[1];
 					this.Path = "/" + sPath;
 					sPath = "Time>/" + sPath;

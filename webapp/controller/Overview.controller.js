@@ -7,30 +7,33 @@ sap.ui.define([
 
 	return Controller.extend("com.sap.build.standard.wuFTimesheet.controller.Overview", {
 		handleRouteMatched: function(oEvent) {
-			var oModel = this.getOwnerComponent().getModel("Time");
-			var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam").getData();
-			var oOverview = this.getOwnerComponent().getModel("Overview");
-			var fLen = oTeam.length;
-			var that = this;
+			/*			var oModel = this.getOwnerComponent().getModel("Time");
+						var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam").getData();
+						var oOverview = this.getOwnerComponent().getModel("Overview");
+						var fLen = oTeam.length;
+						var that = this;
 
-			//oColumns.push("1");
-			//oOverview.setData(oColumns);
-			oOverview.setData({
-				columns: [],
-				rows: []
-			});
+						//oColumns.push("1");
+						//oOverview.setData(oColumns);
+						oOverview.setData({
+							columns: [],
+							rows: []
+						});
 
-			this.oTable.destroyColumns();
-			this.oTable.setVisibleRowCount(fLen);
-			//var oDatePicker = this.getView().byId("EventDate");
-			//var dateold = oDatePicker.getValue();
+						this.oTable.destroyColumns();
+						this.oTable.setVisibleRowCount(fLen);*/
+
+			var oDatePicker = this.getView().byId("EventDate");
+			var dateold = oDatePicker.getValue();
 			this.date = new Date();
-			//if (dateold === "") {
-			this.date = Utilities.formatDateString(this.date);
-			//	oDatePicker.setValue(this.date);
-			//} else {
-			//	this.date = Utilities.formatDateString(dateold);
-			//}
+			if (dateold === "") {
+				this.date = Utilities.formatDateString(this.date);
+				oDatePicker.setValue(this.date);
+			} else {
+				this.date = Utilities.formatDateString(dateold);
+			}
+
+			this._getTimeEvents(this.date);
 			//test
 			//this._addData(null);
 			/*					var oList = this.getView().byId("tblOverview");
@@ -44,22 +47,22 @@ sap.ui.define([
 								});
 								oItems.filter(oFilter);*/
 
-			for (var i = 0; i < fLen; i++) {
+			//	for (var i = 0; i < fLen; i++) {
 
-				/*	oModel.read("/TimeEventSet", { urlParameters: "$filter=EventDate eq datetime '2018-01-25' and Pernr eq '22004454'",
-					success: function(data){
-						that._addData(data.results);
-					}});*/
-				oModel.read("/TimeEventSet", {
-					filters: [
-						new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oTeam[i].data().pernr),
-						new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, this.date)
-					],
-					success: function(data) {
-						that._addData(data.results);
-					}
-				});
-			}
+			/*	oModel.read("/TimeEventSet", { urlParameters: "$filter=EventDate eq datetime '2018-01-25' and Pernr eq '22004454'",
+				success: function(data){
+					that._addData(data.results);
+				}});*/
+			/*		oModel.read("/TimeEventSet", {
+						filters: [
+							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oTeam[i].data().pernr),
+							new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, this.date)
+						],
+						success: function(data) {
+							that._addData(data.results);
+						}
+					});*/
+			//	}
 			/*{
 				filters: new sap.ui.model.Filter({
 					filters: [
@@ -82,15 +85,21 @@ sap.ui.define([
 			var aData = oOverview.getData().rows;
 			var aColumnData = oOverview.getData().columns;
 
-			//var oModel = new sap.ui.model.json.JSONModel();
+			data.sort(function(a, b) {
+				return a.EventTime.ms - b.EventTime.ms;
+			});
 
-			if (aColumnData.length === 0) {
+			if (aColumnData.length < (data.length + 1)) {
+				if (aColumnData.length > 0) {
+					this.oTable.destroyColumns();
+				}
 				var oColumn = new sap.ui.table.Column("Pernr", {
 					name: "Pernr",
 					label: new sap.m.Label("", {
-						text: "Personalnummer"
+						text: "Mitarbeiter"
 					}),
-					template: [new sap.m.Text("", {
+					template: [new sap.m.ObjectIdentifier("", {
+						title: "{Overview>Name}",
 						text: "{Overview>Pernr}"
 					})]
 				});
@@ -99,16 +108,26 @@ sap.ui.define([
 					columnName: "Personalnummer",
 					columnKey: "Pernr"
 				};*/
+				this.P10 = 0;
+				this.P15 = 0;
+				this.P20 = 0;
+				this.P25 = 0;
+
 				aColumnData.push(oColumn);
 				for (var i = 0; i < data.length; i++) {
-					oColumn = new sap.ui.table.Column(data[i].TimeType, {
+					for (var iColumn = 0; iColumn < aColumnData.length; iColumn++) {
+						if (aColumnData[iColumn].getId() === (data[i].TimeType + this[data[i].TimeType])) {
+							this[data[i].TimeType]++;
+						}
+					}
+					oColumn = new sap.ui.table.Column(data[i].TimeType + this[data[i].TimeType], {
 						name: data[i].TimeTypeText,
 						label: new sap.m.Label("", {
 							text: data[i].TimeTypeText
 						}),
 						template: [new sap.m.TimePicker("", {
 							editable: false,
-							value: "{Overview>" + data[i].TimeType + "}"
+							value: "{Overview>" + data[i].TimeType + this[data[i].TimeType] + "}"
 						})]
 					});
 					this.oTable.addColumn(oColumn);
@@ -120,30 +139,31 @@ sap.ui.define([
 						aColumnData.push(oColumn);*/
 				}
 			}
+
+			// Name des MA holen
 			var col1 = {};
-			//col1.Pernr = "20045456";
+			for (var iTeam = 0; iTeam < aData.length; iTeam++) {
+				if (aData[iTeam].Pernr === data[0].Pernr) {
+					col1 = aData[iTeam];
+				}
+			}
+			this.P10 = 0;
+			this.P15 = 0;
+			this.P20 = 0;
+			this.P25 = 0;
+
 			for (var i = 0; i < data.length; i++) {
-				//col1 = col1 + "EventTime : '" + data[i].TimeTypeText + "',";
-				col1.Pernr = data[i].Pernr;
-				col1[data[i].TimeType] = Utilities.formatTime(data[i].EventTime.ms);
+				if (col1[data[i].TimeType + this[data[i].TimeType]] !== undefined) {
+					this[data[i].TimeType]++;
+				}
+				col1[data[i].TimeType + this[data[i].TimeType]] = Utilities.formatTime(data[i].EventTime.ms);
 			}
 			//col1 = "{"+ col1 +"}";
-			aData.push(col1);
+			//aData.push(col1);
 			oOverview.setData({
 				columns: aColumnData,
 				rows: aData
 			});
-
-			//this.oTable.visibleRowCount = this.oTable.visibleRowCount + 1;
-
-			/*			d = s.parseEventsData(d);
-			m.setData(d);
-			s.timeEvents = d;
-			s.byId("CICO_TIME_EVENT_LIST").setModel(m, "timeEvents");
-			s.byId("CICO_PREVIOUS_EVENTS_FORM_CONTAINER").setTitle(s.oBundle.getText("TIME_EVENTS_ON", [s.formatDate(a), s.timeEvents.length]));
-			var S = new sap.ui.model.Sorter("EventTime", true, false);
-			s.byId("CICO_TIME_EVENT_LIST").getBinding("items").sort(S);
-			s.hideBusy(true);*/
 		},
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -157,11 +177,12 @@ sap.ui.define([
 			var oOverview = this.getOwnerComponent().getModel("Overview");
 
 			/** @type sap.ui.table.Table */
-			this.oTable = new sap.ui.table.Table({
+			this.oTable = new sap.ui.table.Table("tblOverView", {
 				visibleRowCountMode: "Interactive",
 				visibleRowCount: 1,
 				minAutoRowCount: 1,
-				selectionMode: "None"
+				selectionMode: "None",
+				noDataText: "Keine Daten vorhanden"
 			});
 			this.oTable.setModel(oOverview);
 
@@ -176,13 +197,58 @@ sap.ui.define([
 			this.oTable.placeAt(this.getView().byId("Page"));
 
 		},
-
 		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf com.sap.build.standard.wuFTimesheet.view.Overview
+		 *@memberOf com.sap.build.standard.wuFTimesheet.controller.Time
 		 */
-		//onBeforeRendering: function() {
+		_onChangeDate: function() {
+
+			var date = Utilities.formatDateString(this.getView().byId("EventDate").getDateValue());
+
+			this._getTimeEvents(date);
+		},
+
+		_getTimeEvents: function(date) {
+				var oModel = this.getOwnerComponent().getModel("Time");
+				var oTeam = this.getOwnerComponent().getModel("exchangeModelTeam").getData();
+				var oOverview = this.getOwnerComponent().getModel("Overview");
+				var fLen = oTeam.length;
+				var that = this;
+
+				oOverview.setData({
+					columns: [],
+					rows: []
+				});
+
+				this.oTable.destroyColumns();
+				this.oTable.setVisibleRowCount(fLen);
+				var aRows = [];
+				for (var i = 0; i < fLen; i++) {
+					var oRow = {};
+					oRow.Pernr = oTeam[i].data().pernr;
+					oRow.Name = oTeam[i].data().name;
+					aRows.push(oRow);
+					oModel.read("/TimeEventSet", {
+						filters: [
+							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oTeam[i].data().pernr),
+							new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, date)
+						],
+						sorters: [new sap.ui.model.Sorter("EventTime")],
+						success: function(data) {
+							that._addData(data.results);
+						}
+					});
+				}
+				oOverview.setData({
+					columns: [],
+					rows: aRows
+				});
+			}
+			/**
+			 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
+			 * (NOT before the first rendering! onInit() is used for that one!).
+			 * @memberOf com.sap.build.standard.wuFTimesheet.view.Overview
+			 */
+			//onBeforeRendering: function() {
 
 		//}
 

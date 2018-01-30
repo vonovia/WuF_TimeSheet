@@ -38,7 +38,7 @@
 															<Label text="Zeit" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"/>
 														</form:label>
 														<form:fields>
-															<TimePicker id="EventTime" showValueHelp="true" enabled="true" visible="true" width="auto" maxLength="0" displayFormat="HH:mm"/>
+															<TimePicker id="EventTime" enabled="true" visible="true" width="auto" displayFormat="HH:mm"/>
 														</form:fields>
 													</form:FormElement>
 												</form:formElements>
@@ -75,7 +75,7 @@
 										<items>
 											<ObjectListItem intro="" title="{Time>TimeTypeText}"
 												number="{path: 'Time>EventTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { UTC: true, pattern: 'HH:mm' }}"
-												numberUnit="{Time>StatusText}" numberState="None" type="Active" selected="true" showMarkers="false" press="">
+												numberUnit="{Time>StatusText}" numberState="None" type="Active" selected="true">
 												<attributes/>
 												<firstStatus>
 													<ObjectStatus text="" state="None"/>

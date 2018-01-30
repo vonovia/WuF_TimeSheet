@@ -15,7 +15,7 @@
         "id": 3469897,
         "runnerId": "webapprunner",
         "displayName": "Run testFLPService.html",
-        "lastRunTimeStamp": 1516981178883
+        "lastRunTimeStamp": 1517305892514
       }
     },
     {
@@ -46,5 +46,8 @@
         "lastRunTimeStamp": 1516096510200
       }
     }
-  ]
+  ],
+  "annotationeditor": {
+    "sConfigId": "-1"
+  }
 }

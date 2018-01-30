@@ -70,7 +70,10 @@
 				},
 				"sap.m": {},
 				"sap.ui.core": {},
-				"sap.ui.layout": {}
+				"sap.ui.layout": {},
+				"sap.ui.table": {
+					"minVersion": ""
+				}
 			}
 		},
 		"contentDensities": {
@@ -151,37 +154,43 @@
 					"transition": "slide"
 				}
 			},
-			"routes": [{
-				"pattern": "Team/:context:",
-				"name": "Team",
-				"target": [
-					"Team"
-				]
-			}, {
-				"pattern": "",
-				"name": "default",
-				"target": [
-					"Team"
-				]
-			}, {
-				"pattern": "Time/:context:",
-				"name": "Time",
-				"target": [
-					"Time"
-				]
-			}, {
-				"pattern": "TimeEdit/:context:",
-				"name": "TimeEdit",
-				"target": [
-					"TimeEdit"
-				]
-			}, {
-				"pattern": "Overview/:context:",
-				"name": "Overview",
-				"target": [
-					"Overview"
-				]
-			}]
+			"routes": [
+				{
+					"pattern": "Team/:context:",
+					"name": "Team",
+					"target": [
+						"Team"
+					]
+				},
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"Team"
+					]
+				},
+				{
+					"pattern": "Time/:context:",
+					"name": "Time",
+					"target": [
+						"Time"
+					]
+				},
+				{
+					"pattern": "TimeEdit/:context:",
+					"name": "TimeEdit",
+					"target": [
+						"TimeEdit"
+					]
+				},
+				{
+					"pattern": "Overview/:context:",
+					"name": "Overview",
+					"target": [
+						"Overview"
+					]
+				}
+			]
 		}
 	},
 	"sap.platform.abap": {

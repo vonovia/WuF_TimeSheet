@@ -10,8 +10,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oParams = {};
 
-			if (oEvent.mParameters.data.context) {
-				this.sContext = oEvent.mParameters.data.context;
+			if (oEvent.getParameter("data").context) {
+				//this.sContext = oEvent.getData().context;
+				this.sContext = oEvent.getParameter("data").context;
 				var oPath;
 				if (this.sContext) {
 					oPath = {

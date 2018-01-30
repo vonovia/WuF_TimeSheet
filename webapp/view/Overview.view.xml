@@ -2,7 +2,11 @@
 	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="com.sap.build.standard.wuFTimesheet.controller.Overview">
 	<Page id="Page" showHeader="false" showFooter="false" showNavButton="false">
 		<content id="PageContent">
-
+			<FlexBox width="100%" id="__box0" justifyContent="Center">
+				<items>
+					<DatePicker width="100%" id="EventDate" valueFormat="YYYY-MM-dd" change="_onChangeDate"/>
+				</items>
+			</FlexBox>
 		</content>
 	</Page>
 </mvc:View>

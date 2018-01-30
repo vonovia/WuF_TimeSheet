@@ -51,12 +51,13 @@
 				<items>
 					<ColumnListItem type="Active">
 						<cells>
-							<ObjectIdentifier title="{Pernr}" text="{Name}" titleActive="false" visible="true"/>
+							<ObjectIdentifier title="{Name}" text="{Pernr}" titleActive="false" visible="true"/>
 							<Text text="{Org01}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"/>
 							<ObjectNumber number="{Planstelle}" unit="" emphasized="true" state="None"/>
 						</cells>
 						<customData>
 							<core:CustomData key="pernr" value="{Pernr}"/>
+							<core:CustomData key="name" value="{Name}"/>
 						</customData>
 					</ColumnListItem>
 				</items>
