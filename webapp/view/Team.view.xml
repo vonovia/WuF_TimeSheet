@@ -16,14 +16,14 @@
 						<content>
 							<Title text="Team" titleStyle="Auto" width="auto" textAlign="Begin" visible="true"/>
 							<ToolbarSpacer width=""/>
-							<Button text="" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="true"
-								iconDensityAware="false"/>
-							<Button text="" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto" enabled="true" visible="true"
-								iconDensityAware="false"/>
-							<Button text="" type="Transparent" icon="sap-icon://group-2" iconFirst="true" width="auto" enabled="true" visible="true"
+							<!--<Button text="" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="true"
+								iconDensityAware="false"/>-->
+							<ToggleButton text="" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto" enabled="true" visible="true"
+								iconDensityAware="false" tooltip="Filter" press="toggleOwnTeam" pressed="{ui>/ownTeamFilterOn}"/>
+							<!--<Button text="" type="Transparent" icon="sap-icon://group-2" iconFirst="true" width="auto" enabled="true" visible="true"
 								iconDensityAware="false"/>
 							<Button text="" type="Transparent" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true" visible="true"
-								iconDensityAware="false"/>
+								iconDensityAware="false"/>-->
 						</content>
 						<tooltip/>
 					</Toolbar>
@@ -47,6 +47,13 @@
 						</header>
 						<footer/>
 					</Column>
+					<Column id="OwnTeam" width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="Eigenes Team" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"/>
+						</header>
+						<footer/>
+					</Column>
 				</columns>
 				<items>
 					<ColumnListItem type="Active">
@@ -54,10 +61,12 @@
 							<ObjectIdentifier title="{Name}" text="{Pernr}" titleActive="false" visible="true"/>
 							<Text text="{Org01}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"/>
 							<ObjectNumber number="{Planstelle}" unit="" emphasized="true" state="None"/>
+							<CheckBox selected="{path: 'OwnTeam'}" editable="false"/>
 						</cells>
 						<customData>
 							<core:CustomData key="pernr" value="{Pernr}"/>
 							<core:CustomData key="name" value="{Name}"/>
+							<core:CustomData key="ownTeam" value="{OwnTeam}"/>
 						</customData>
 					</ColumnListItem>
 				</items>

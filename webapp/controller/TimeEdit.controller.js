@@ -9,32 +9,17 @@ sap.ui.define([
 		"use strict";
 		return BaseController.extend("com.sap.build.standard.wuFTimesheet.controller.TimeEdit", {
 			handleRouteMatched: function(oEvent) {
-				var oParams = {};
-				if (oEvent.getParameter("data").context) {
-					this.sContext = oEvent.getParameter("data").context;
-					var sPath = this.sContext.split(">")[1];
-					this.Path = "/" + sPath;
-					sPath = "Time>/" + sPath;
-					var oPath;
-					if (this.sContext) {
-						oPath = {
-							path: sPath,
-							parameters: oParams
-						};
+				var oProperties = this.getOwnerComponent().getModel("exchangeModel").getData();
 
-						var oProperties = this.getOwnerComponent().getModel("exchangeModel").getData();
+				this.Pernr = oProperties.Pernr; //this.sContext.substr(25, 8);
+				this.ReqId = oProperties.ReqId; // this.sContext.substr(42, 32);
+				this.EventDate = oProperties.EventDate;
+				this.TimeType = oProperties.TimeType;
+				this.EventTime = oProperties.EventTime;
 
-						//this.getView().bindObject(oPath);
-						this.Pernr = oProperties.Pernr; //this.sContext.substr(25, 8);
-						this.ReqId = oProperties.ReqId; // this.sContext.substr(42, 32);
-						this.EventDate = oProperties.EventDate;
-						this.TimeType = oProperties.TimeType;
+				this.getView().byId("EventTime").setValue(Utilities.formatTime(oProperties.EventTime.ms));
+				this.getView().byId("CmbEvenType").setSelectedKey(oProperties.TimeType);
 
-						//this.getView().byId("EventTime").setValue(this.formatTime(oProperties.EventTime));
-						this.getView().byId("EventTime").setValue(this.formatTime(oProperties.EventTime.ms));
-						this.getView().byId("CmbEvenType").setSelectedKey(oProperties.TimeType);
-					}
-				}
 			},
 			_onPageNavButtonPress: function() {
 				var oHistory = History.getInstance();
@@ -67,17 +52,6 @@ sap.ui.define([
 			/**
 			 *@memberOf com.sap.build.standard.wuFTimesheet.controller.TimeEdit
 			 */
-			formatTimeString: function(d) {
-				var h = d.getHours(),
-					m = d.getMinutes();
-				if (h.length === 1) {
-					h = "0" + h;
-				}
-				if (m.length === 1) {
-					m = "0" + m;
-				}
-				return "PT" + h + "H" + m + "M00S";
-			},
 			_onChangeData: function() {
 
 				//	var oOldProperties = this.getOwnerComponent().getModel("exchangeModel").getData();
@@ -86,32 +60,10 @@ sap.ui.define([
 				var that = this;
 				var fLen = oTeam.length;
 				for (var i = 0; i < fLen; i++) {
-					oModel.read("/TimeEventSet", {
-						filters: [
-							new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, oTeam[i].data().pernr),
-							new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, this.EventDate),
-							new sap.ui.model.Filter("TimeType", sap.ui.model.FilterOperator.EQ, this.TimeType)
-						],
-						success: function(data) {
-							that._changeData(data.results);
-						}
+					Utilities.getTimeEvents(oModel, oTeam[i].data().pernr, this.EventDate, this.EventTime, this.TimeType, function(data) {
+						that._changeData(data);
 					});
 				}
-
-				/*	var oProperties = {
-						ReqId: this.ReqId,
-						Pernr: this.Pernr,
-						TimeType: oOldProperties.TimeType,
-						EventDate: this.formatDateTimeString(oOldProperties.EventDate),
-						EventTime: this.formatTimeString(this.getView().byId("EventTime").getDateValue()),
-						TimezoneOffset: oOldProperties.TimezoneOffset,
-						//ApproverPernr: "00000000"
-					};*/
-
-				//oModel.update(this.Path, oProperties, {
-				//	refreshAfterChange: false
-				//});
-
 			},
 			successHandler: function(d, r) {
 
@@ -160,30 +112,12 @@ sap.ui.define([
 				}
 				//this._onPageNavButtonPress();	
 			},
-			formatDateTimeString: function(d) {
-				if (typeof d === "string") {
-					d = new Date(d);
-				}
-				var a = sap.ui.core.format.DateFormat.getDateInstance({
-					pattern: "YYYY-MM-dd"
-				});
-				var b = a.format(d) + "T00:00:00";
-				return b;
-			},
-			formatTime: function(t) {
-				var T = sap.ui.core.format.DateFormat.getTimeInstance({
-					pattern: "HH:mm",
-					UTC: true
-				});
-				var d = new Date(t);
-				var a = T.format(d);
-				return a;
-			},
 			_changeData: function(data) {
-				var oModel = this.getOwnerComponent().getModel("Time");
 				var that = this;
-				data[0].EventTime = this.formatTimeString(this.getView().byId("EventTime").getDateValue());
-				oModel.update(this.Path, data[0], {
+				var oModel = this.getOwnerComponent().getModel("Time");
+				var sPath = "/TimeEventSet(Pernr='" + data[0].Pernr + "',ReqId='" + data[0].ReqId + "')";
+				data[0].EventTime = Utilities.formatTimeString(this.getView().byId("EventTime").getDateValue());
+				oModel.update(sPath, data[0], {
 					merge: false,
 					success: that.successHandler(),
 					error: that.errorHandler(),

@@ -6,6 +6,26 @@ sap.ui.define([
 	// class providing static utility methods to retrieve entity default values.
 
 	return {
+		getTimeEvents: function(oModel, pernr, eventDate, eventTime, timeType, parseData) {
+			oModel.read("/TimeEventSet", {
+				filters: [
+					new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, pernr),
+					new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, eventDate)
+				],
+				success: function(data) {
+					for (var i = 0; i < data.results.length; i++) {
+						if (eventTime !== null && data.results[i].EventTime.ms !== eventTime.ms) {
+							data.results.splice(i, 1);
+							i--;
+						} else if (timeType !== null && data.results[i].TimeType !== timeType) {
+							data.results.splice(i, 1);
+							i--;
+						}
+					}
+					parseData(data.results);
+				}
+			});
+		},
 		formatTime: function(t) {
 			var T = sap.ui.core.format.DateFormat.getTimeInstance({
 				pattern: "HH:mm",

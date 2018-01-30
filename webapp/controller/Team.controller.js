@@ -8,20 +8,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	return BaseController.extend("com.sap.build.standard.wuFTimesheet.controller.Team", {
 		handleRouteMatched: function(oEvent) {
 
-			var oParams = {};
-
-			if (oEvent.getParameter("data").context) {
-				//this.sContext = oEvent.getData().context;
-				this.sContext = oEvent.getParameter("data").context;
-				var oPath;
-				if (this.sContext) {
-					oPath = {
-						path: "/" + this.sContext,
-						parameters: oParams
-					};
-					this.getView().bindObject(oPath);
-				}
-			}
+			var oItems = this.getView().byId("tblTeam").getBinding("items");
+			var oFilter = new sap.ui.model.Filter("OwnTeam", sap.ui.model.FilterOperator.EQ, "true");
+			oItems.filter(oFilter);
 
 		},
 		_onPageNavButtonPress: function(oEvent) {
@@ -111,20 +100,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			});
 
 		},
-		/*_onRowPress: function(oEvent) {
-
-			var oBindingContext = oEvent.getSource().getBindingContext();
-
-			return new Promise(function(fnResolve) {
-
-				this.doNavigate("Time", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
-				if (err !== undefined) {
-					MessageBox.error(err.message);
-				}
-			});
-
-		},*/
+		toggleOwnTeam: function(oEvent) {
+			var sFilter = oEvent.getParameter("pressed") ? "true" : "false";
+			var oItems = this.getView().byId("tblTeam").getBinding("items");
+			var oFilter = new sap.ui.model.Filter("OwnTeam", sap.ui.model.FilterOperator.EQ, sFilter);
+			oItems.filter(oFilter);
+		},
 		_onTeamChoice: function(oEvent) {
 
 			var oSelectedItems = this.getView().byId("tblTeam").getSelectedItems();
@@ -165,6 +146,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this.mBindingOptions = {};
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			this.oRouter.getTarget("Team").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
+			this.getView().setModel(new sap.ui.model.json.JSONModel({
+				ownTeamFilterOn: true
+			}), "ui");
 
 		}
 	});
