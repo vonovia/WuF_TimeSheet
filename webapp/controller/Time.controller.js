@@ -244,29 +244,43 @@ sap.ui.define([
 							return a.ms - b.ms;
 						};
 						that.byId("TimeList").getBinding("items").sort(oSorter);
+						that.prefillTimeType();
 					});
 					this.readData = false;
 				}
+			},
+			prefillTimeType: function() {
+				var sTimeType = "";
+				if (this.timeEvents.length === 0) {
+					sTimeType = "P10";
+				} else {
+					switch (this.timeEvents[this.timeEvents.length - 1].TimeType) {
+						case "P10":
+							sTimeType = "P15";
+							break;
+						case "P15":
+							sTimeType = "P25";
+							break;
+						case "P25":
+							sTimeType = "P20";
+							break;
+						case "P20":
+							sTimeType = "";
+							break;
+						default:
+							sTimeType = "P10";
+					}
+				}
+				this.getView().byId("CmbEvenType").setSelectedKey(sTimeType);
 			},
 			/**
 			 *@memberOf com.sap.build.standard.wuFTimesheet.controller.Time
 			 */
 			_onChangeDate: function() {
 
-				/*				var oList = this.getView().byId("TimeList");
-								var oItems = oList.getBinding("items");*/
 				this.readData = true;
 				var date = Utilities.formatDateString(this.getView().byId("EventDate").getDateValue());
 				this.getTimeEvents(date);
-
-				/*				var oFilter = new sap.ui.model.Filter({
-									filters: [
-										new sap.ui.model.Filter("Pernr", sap.ui.model.FilterOperator.EQ, this.sPernr),
-										new sap.ui.model.Filter("EventDate", sap.ui.model.FilterOperator.EQ, date)
-									],
-									and: true
-								});
-								oItems.filter(oFilter);*/
 			},
 			openConfirmationPopup: function(s, a, b, sPath) {
 				var c = this;

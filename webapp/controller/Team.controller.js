@@ -106,6 +106,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oFilter = new sap.ui.model.Filter("OwnTeam", sap.ui.model.FilterOperator.EQ, sFilter);
 			oItems.filter(oFilter);
 		},
+		formatStateJob: function(sJob, sTeam) {
+			if (sJob === "Vorarbeiter") {
+				return "Warning";
+			} else if (sTeam === true) {
+				return "Success";
+			} else {
+				return "Error";
+			}
+		},
 		_onTeamChoice: function(oEvent) {
 
 			var oSelectedItems = this.getView().byId("tblTeam").getSelectedItems();

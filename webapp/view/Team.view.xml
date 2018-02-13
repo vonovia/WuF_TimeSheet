@@ -60,7 +60,8 @@
 						<cells>
 							<ObjectIdentifier title="{Name}" text="{Pernr}" titleActive="false" visible="true"/>
 							<Text text="{Org01}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"/>
-							<ObjectNumber number="{Planstelle}" unit="" emphasized="true" state="None"/>
+							<ObjectNumber number="{Planstelle}" unit="" emphasized="true"
+								state="{ parts: [ {path: 'Planstelle'}, {path: 'OwnTeam'} ], formatter: '.formatStateJob' }"/>
 							<CheckBox selected="{path: 'OwnTeam'}" editable="false"/>
 						</cells>
 						<customData>
